@@ -1,160 +1,60 @@
-# Progresso do Projeto — Rex
+# Progresso do Projeto — Rex (Conselheiro Financeiro Inteligente)
 
-## Sobre o Projeto
-Agente financeiro inteligente com multi-agentes, RAG e dados reais.
-Atende Pessoa Física (PF) e Pessoa Jurídica (PJ).
-Desenvolvido como projeto de portfólio / competição DIO.
-
-## Stack
-- Python 3.11
-- Streamlit (interface)
-- Groq API (LLM — LLaMA 3, gratuito)
-- ChromaDB (banco vetorial — Sprint 2)
-- sentence-transformers (embeddings — Sprint 2)
-- pandas (análise de dados)
-- requests (APIs externas)
-
-## APIs Externas Planejadas
-- Banco Central (BCB SGS): Selic, IPCA, câmbio — gratuita
-- BrasilAPI: consulta CNPJ — gratuita
-- Brapi: cotações B3 — gratuita
-- CoinGecko: criptomoedas — gratuita
-- CVM: fundos de investimento — gratuita
-
-## Agente
-- Nome: Rex (de "regere" = guiar em latim)
-- Perfis PF: iniciante, intermediário, avançado
-- Perfis PJ: MEI, pequena empresa, média empresa, atacado
-- Anti-alucinação: 6 regras em todos os prompts
-- Placeholders prontos: {perfil}, {dados_bcb}, {dados_acoes}, {dados_cripto}
+## 📌 Sobre o Projeto
+Agente financeiro inteligente com arquitetura **Multi-Agentes**, **RAG (Retrieval-Augmented Generation)** e **ancoragem em dados econômicos reais**.
+Atende perfis diversificados de **Pessoa Física (PF)** e **Pessoa Jurídica (PJ)** com proteção anti-alucinação e análise quantitativa de despesas via Pandas.
+Desenvolvido como projeto de destaque para **Portfólio de IA Generativa & Engenharia de Dados**.
 
 ---
 
-## Sprints
-
-### Sprint 1 — Fundação (18/03 — 22/03) 🔄 em andamento
-**Meta:** app.py rodando com Groq API e perfis PF/PJ
-
-#### Sessão 18/03 (Qua) ✅
-- [x] Projeto clonado no VS Code
-- [x] .env e .gitignore criados
-- [x] Dependências instaladas
-- [x] Estrutura de pastas criada (agents, prompts, api, rag)
-- [x] 7 prompts criados e revisados
-- [x] Agente renomeado para Rex
-- [x] Produtos de crédito PJ incluídos por perfil
-- [x] Primeiro PR mergeado na main
-
-#### Sessão 20/03 (Sex) ⏳
-- [ ] Criar src/agents/base_agent.py
-- [ ] Criar src/app.py com Groq + seletor PF/PJ
-- [ ] Criar data/perfil_pf.json
-- [ ] Criar data/perfil_pj.json
-- [ ] Testar Rex respondendo de verdade
-
-#### Sessão 21/03 (Sáb) ⏳
-- [ ] Criar data/transacoes_pf.csv
-- [ ] Criar data/transacoes_pj.csv
-- [ ] Refinar prompts com base nos testes
-- [ ] Testes ponta a ponta PF e PJ
-- [ ] Commit + PR Sprint 1 completa
-- [ ] Tag v0.1.0
-
-#### Sessão 22/03 (Dom) ⏳
-- [ ] Buffer / revisão geral Sprint 1
-- [ ] Adiantar Sprint 2 se estiver bem
+## 🛠️ Stack Tecnológica
+- **Python 3.11+**
+- **Streamlit** (Interface Web Interativa com Dashboard Econômico)
+- **Groq API** (LLM de altíssima velocidade — `openai/gpt-oss-120b`)
+- **Scikit-Learn / TF-IDF Vectorizer** (Mecanismo RAG semântico rápido e autocontido)
+- **Pandas** (Análise de séries temporais, extratos e transações)
+- **APIs de Mercado e Governo:**
+  - **Banco Central do Brasil (SGS):** Selic, IPCA e Dólar PTAX
+  - **CoinGecko:** Cotação Bitcoin em BRL
+  - **Brapi:** Cotação IBOVESPA
 
 ---
 
-### Sprint 2 — RAG + APIs Reais (24/03 — 30/03) ⏳
-**Meta:** respostas ancoradas em dados reais
-
-- [ ] ChromaDB + embeddings (sentence-transformers)
-- [ ] Criar rag/knowledge_base.py
-- [ ] Indexar documentos financeiros
-- [ ] Função buscar_contexto(query)
-- [ ] Criar api/banco_central.py (Selic, IPCA, câmbio)
-- [ ] Criar api/brasil_api.py (CNPJ)
-- [ ] Criar api/brapi.py (cotações B3)
-- [ ] Criar api/coingecko.py (criptomoedas)
-- [ ] Cache local 6h para APIs
-- [ ] Painel de dados reais na UI
-- [ ] Tag v0.2.0
+## 🤖 Arquitetura Multi-Agentes
+1. **Orquestrador (`OrquestradorAgent`):**
+   - Classificação de intenção em linguagem natural e despacho dinâmico.
+2. **Educador Financeiro (`EducadorAgent`):**
+   - Didática personalizada, RAG sobre produtos financeiros e cotações reais injetadas.
+3. **Analista de Dados (`AnalistaAgent`):**
+   - Análise quantitativa de transações com agregação por categoria e cálculo de fluxo de caixa via Pandas.
+4. **Gestor de Risco e Alertas (`AlertasAgent`):**
+   - Varredura de cheque especial, juros rotativos de cartão e dimensionamento de reserva de emergência.
 
 ---
 
-### Sprint 3 — Multi-agentes (31/03 — 02/04) ⏳
-**Meta:** orquestrador + 3 agentes funcionando
+## 📅 Roadmap de Sprints & Entregas
 
-- [ ] Criar agents/orquestrador.py
-- [ ] Criar agents/educador.py
-- [ ] Criar agents/analista.py (pandas + CSV)
-- [ ] Criar agents/alertas.py (regras de risco)
-- [ ] Lógica de roteamento por intenção
-- [ ] Log de qual agente respondeu na UI
-- [ ] Integrar orquestrador no app.py
-- [ ] Testes com 10 perguntas variadas
-- [ ] Tag v0.3.0
+### ✅ Sprint 1 — Fundação & MVP Conversacional
+- [x] Estrutura modular (`agents`, `prompts`, `mock data`).
+- [x] Criação de 7 personas especializadas em prompts (PF: Iniciante, Intermediário, Avançado / PJ: MEI, Pequena, Média, Atacado).
+- [x] Implementação do `BaseAgent` com Groq API.
+- [x] Mocks estruturados em JSON para cada perfil.
+- [x] Filtros anti-alucinação e sanitização de caracteres/espaçamento.
 
----
+### ✅ Sprint 2 — RAG & APIs Financeiras Reais
+- [x] Módulo `src/api/banco_central.py` integrado à API SGS oficial do Banco Central (Selic, IPCA, Dólar).
+- [x] Módulo `src/api/market_api.py` integrado à CoinGecko e Brapi (Bitcoin e IBOVESPA).
+- [x] Sistema de Cache resiliente para tolerância a falhas e economia de requisições.
+- [x] Módulo `src/rag/knowledge_base.py` com busca semântica por similaridade de cosseno sobre produtos e diretrizes normativas.
 
-### Sprint 4 — Portfólio (04/04 — 05/04) ⏳
-**Meta:** projeto impressiona no GitHub
+### ✅ Sprint 3 — Arquitetura Multi-Agentes Especializada
+- [x] Implementação do `OrquestradorAgent` com roteamento automático por intenção.
+- [x] Agente especialista `EducadorAgent` com injeção em tempo real de RAG + BCB.
+- [x] Agente especialista `AnalistaAgent` com leitura de extrato CSV e agregação via Pandas.
+- [x] Agente especialista `AlertasAgent` com detecção de dívidas abusivas e suficiência de reserva.
+- [x] Interface Streamlit enriquecida com identificação visual do agente ativo e gráficos de despesa.
 
-- [ ] README profissional com arquitetura
-- [ ] Demo GIF (Streamlit com PF e PJ)
-- [ ] requirements.txt + .env.example
-- [ ] Seção anti-alucinação documentada
-- [ ] Fechar todas as issues no GitHub Projects
-- [ ] Tag v1.0.0
-
----
-
-## Estrutura de Pastas
-```
-dio-lab-bia-do-futuro/
-├── .env                        # chaves de API (não vai pro GitHub)
-├── .gitignore
-├── README.md
-├── data/
-│   ├── perfil_pf.json          # Sprint 1
-│   ├── perfil_pj.json          # Sprint 1
-│   ├── transacoes_pf.csv       # Sprint 1
-│   └── transacoes_pj.csv       # Sprint 1
-├── docs/
-│   └── progresso.md            # este arquivo
-└── src/
-    ├── app.py                  # Sprint 1
-    ├── agents/
-    │   ├── base_agent.py       # Sprint 1
-    │   ├── educador.py         # Sprint 3
-    │   ├── analista.py         # Sprint 3
-    │   ├── alertas.py          # Sprint 3
-    │   └── orquestrador.py     # Sprint 3
-    ├── api/
-    │   ├── banco_central.py    # Sprint 2
-    │   ├── brasil_api.py       # Sprint 2
-    │   ├── brapi.py            # Sprint 2
-    │   └── coingecko.py        # Sprint 2
-    ├── prompts/
-    │   ├── pf_iniciante.txt    ✅
-    │   ├── pf_intermediario.txt✅
-    │   ├── pf_avancado.txt     ✅
-    │   ├── pj_mei.txt          ✅
-    │   ├── pj_pequena.txt      ✅
-    │   ├── pj_media.txt        ✅
-    │   └── pj_atacado.txt      ✅
-    └── rag/
-        └── knowledge_base.py   # Sprint 2
-```
-
-## Convenção de Commits
-- feat: nova funcionalidade
-- fix: correção de bug
-- docs: documentação
-- refactor: refatoração sem nova funcionalidade
-- test: testes
-
-## Convenção de Branches
-- feat/nome-da-funcionalidade
-- fix/nome-do-bug
+### ✅ Sprint 4 — Finalização de Portfólio & Apresentação
+- [x] `README.md` de nível sênior com diagrama visual Mermaid e guia de execução.
+- [x] `.env.example` e `requirements.txt` atualizados e testados.
+- [x] Código desacoplado e pronto para publicação no GitHub.
