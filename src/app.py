@@ -1,68 +1,156 @@
 import json
-import pandas as pd
-import requests
 import streamlit as st
+import sys
+import os
 
-# ============ CONFIGURAÇÃO ============
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODELO = "gpt-oss"
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from agents.base_agent import BaseAgent
 
-# ============ CARREGAR DADOS ============
-perfil = json.load(open('./data/perfil_investidor.json'))
-transacoes = pd.read_csv('./data/transacoes.csv')
-historico = pd.read_csv('./data/historico_atendimento.csv')
-produtos = json.load(open('./data/produtos_financeiros.json'))
+# ============ CONFIGURAÇÃO DA PÁGINA ============
+st.set_page_config(
+    page_title="Rex — Conselheiro Financeiro",
+    page_icon="💼",
+    layout="centered"
+)
 
-# ============ MONTAR CONTEXTO ============
-contexto = f"""
-CLIENTE: {perfil['nome']}, {perfil['idade']} anos, perfil {perfil['perfil_investidor']}
-OBJETIVO: {perfil['objetivo_principal']}
-PATRIMÔNIO: R$ {perfil['patrimonio_total']} | RESERVA: R$ {perfil['reserva_emergencia_atual']}
+# ============ FUNÇÕES AUXILIARES ============
+def carregar_mock(tipo_usuario: str) -> str:
+    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    caminho = os.path.join(base, "data", "mock", f"{tipo_usuario}.json")
+    with open(caminho, "r", encoding="utf-8") as f:
+        dados = json.load(f)
+    return json.dumps(dados, ensure_ascii=False, indent=2)
 
-TRANSAÇÕES RECENTES:
-{transacoes.to_string(index=False)}
+def inicializar_sessao():
+    if "mensagens" not in st.session_state:
+        st.session_state.mensagens = []
+    if "agente" not in st.session_state:
+        st.session_state.agente = None
+    if "perfil_escolhido" not in st.session_state:
+        st.session_state.perfil_escolhido = None
+    if "onboarding_completo" not in st.session_state:
+        st.session_state.onboarding_completo = False
 
-ATENDIMENTOS ANTERIORES:
-{historico.to_string(index=False)}
+# ============ TELA DE ONBOARDING ============
+def tela_onboarding():
+    st.title("💼 Rex — Conselheiro Financeiro")
+    st.markdown("Olá! Eu sou o **Rex**, seu conselheiro financeiro pessoal.")
+    st.markdown("Antes de começar, me conta um pouco sobre você:")
 
-PRODUTOS DISPONÍVEIS:
-{json.dumps(produtos, indent=2, ensure_ascii=False)}
-"""
+    col1, col2 = st.columns(2)
 
-# ============ SYSTEM PROMPT ============
-SYSTEM_PROMPT = """Você é o Edu, um educador financeiro amigável e didático.
+    with col1:
+        tipo = st.selectbox(
+            "Você é:",
+            ["Pessoa Física", "Pessoa Jurídica"]
+        )
 
-OBJETIVO:
-Ensinar conceitos de finanças pessoais de forma simples, usando os dados do cliente como exemplos práticos.
+    with col2:
+        if tipo == "Pessoa Física":
+            st.markdown("**Seu nível financeiro:**")
+            nivel = st.radio(
+                "Escolha o que mais combina com você:",
+                ["Iniciante", "Intermediário", "Avançado"],
+                captions=[
+                    "Estou começando a organizar minhas finanças agora",
+                    "Já invisto em CDB, Tesouro Direto e quero otimizar",
+                    "Invisto em ações, FIIs e busco análises aprofundadas"
+                ]
+            )
+            mapa = {
+                "Iniciante": "pf_iniciante",
+                "Intermediário": "pf_intermediario",
+                "Avançado": "pf_avancado"
+            }
+        else:
+            st.markdown("**Tipo de empresa:**")
+            nivel = st.radio(
+                "Escolha o que melhor descreve seu negócio:",
+                ["MEI / Autônomo", "Pequena Empresa", "Média Empresa", "Atacado / Distribuidor"],
+                captions=[
+                    "Faturamento até R$ 81 mil/ano, sem funcionários ou com poucos",
+                    "Simples Nacional, 1 a 10 funcionários, faturamento até R$ 4,8 mi/ano",
+                    "Lucro Real ou Presumido, faturamento acima de R$ 4,8 mi/ano",
+                    "Distribuidor ou atacadista, alto volume e margem reduzida"
+                ]
+            )
+            mapa = {
+                "MEI / Autônomo": "pj_mei",
+                "Pequena Empresa": "pj_pequena",
+                "Média Empresa": "pj_media",
+                "Atacado / Distribuidor": "pj_atacado"
+            }
 
-REGRAS:
-- NUNCA recomende investimentos específicos, apenas explique como funcionam;
-- JAMAIS responda a perguntas fora do tema ensino de finanças pessoais. 
-  Quando ocorrer, responda lembrando o seu papel de educador financeiro;
-- Use os dados fornecidos para dar exemplos personalizados;
-- Linguagem simples, como se explicasse para um amigo;
-- Se não souber algo, admita: "Não tenho essa informação, mas posso explicar...";
-- Sempre pergunte se o cliente entendeu;
-- Responda de forma sucinta e direta, com no máximo 3 parágrafos.
-"""
+    if st.button("Começar conversa com o Rex"):
+        tipo_usuario = mapa[nivel]
+        perfil = carregar_mock(tipo_usuario)
+        st.session_state.agente = BaseAgent(tipo_usuario, perfil)
+        st.session_state.perfil_escolhido = tipo_usuario
+        st.session_state.onboarding_completo = True
+        st.rerun()
 
-# ============ CHAMAR OLLAMA ============
-def perguntar(msg):
-    prompt = f"""
-    {SYSTEM_PROMPT}
+# ============ TELA DO CHAT ============
+def tela_chat():
+    st.title("💼 Rex — Conselheiro Financeiro")
 
-    CONTEXTO DO CLIENTE:
-    {contexto}
+    # Sidebar com info do perfil
+    with st.sidebar:
+        st.markdown("### Seu perfil")
+        st.markdown(f"`{st.session_state.perfil_escolhido}`")
+        if st.button("Trocar perfil"):
+            st.session_state.mensagens = []
+            st.session_state.agente = None
+            st.session_state.perfil_escolhido = None
+            st.session_state.onboarding_completo = False
+            st.rerun()
 
-    Pergunta: {msg}"""
+    # Mensagem inicial do Rex — só chama API se histórico vazio
+    if len(st.session_state.mensagens) == 0:
+        with st.chat_message("assistant"):
+            with st.spinner("Rex está pensando..."):
+                pensamento, resposta = st.session_state.agente.responder([])
+                st.write(resposta)
+        st.session_state.mensagens.append({
+            "role": "assistant",
+            "content": resposta,
+            "pensamento": pensamento
+        })
+        st.rerun()
 
-    r = requests.post(OLLAMA_URL, json={"model": MODELO, "prompt": prompt, "stream": False})
-    return r.json()['response']
+    # Exibir histórico de mensagens
+    for msg in st.session_state.mensagens:
+        with st.chat_message(msg["role"]):
+            st.write(msg["content"])
 
-# ============ INTERFACE ============
-st.title("🎓 Edu, o Educador Financeiro")
+    # Input do usuário
+    if pergunta := st.chat_input("Sua dúvida financeira..."):
+        st.session_state.mensagens.append({
+            "role": "user",
+            "content": pergunta
+        })
 
-if pergunta := st.chat_input("Sua dúvida sobre finanças..."):
-    st.chat_message("user").write(pergunta)
-    with st.spinner("..."):
-        st.chat_message("assistant").write(perguntar(pergunta))
+        with st.chat_message("user"):
+            st.write(pergunta)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Rex está pensando..."):
+                historico = [
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.mensagens
+                ]
+                pensamento, resposta = st.session_state.agente.responder(historico)
+                st.write(resposta)
+
+        st.session_state.mensagens.append({
+            "role": "assistant",
+            "content": resposta,
+            "pensamento": pensamento
+        })
+
+# ============ MAIN ============
+inicializar_sessao()
+
+if not st.session_state.onboarding_completo:
+    tela_onboarding()
+else:
+    tela_chat()

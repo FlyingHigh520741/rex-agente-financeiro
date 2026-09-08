@@ -1,0 +1,38 @@
+{
+    "razao_social": "Distribuidora Norte Ltda",
+    "nome_proprietario": "Paulo Ferreira",
+    "cnpj": "67.890.123/0001-45",
+    "segmento": "Distribuição de alimentos",
+    "regime_tributario": "Lucro Real",
+    "faturamento_mensal": 2800000.00,
+    "faturamento_anual": 33600000.00,
+    "despesas_mensais": {
+        "folha_pagamento": 380000.00,
+        "frota": 120000.00,
+        "armazem": 85000.00,
+        "marketing": 40000.00,
+        "impostos": 420000.00,
+        "outros": 55000.00
+    },
+    "funcionarios": 120,
+    "indicadores": {
+        "giro_estoque_anual": 8,
+        "margem_bruta_percentual": 12.5,
+        "capital_giro": 1200000.00,
+        "divida_liquida": 3500000.00,
+        "prazo_medio_recebimento": 35,
+        "prazo_medio_pagamento": 28,
+        "inadimplencia_percentual": 5.8
+    },
+    "estoque": {
+        "valor_total": 4500000.00,
+        "giro_meta_anual": 12,
+        "ruptura_percentual": 3.2
+    },
+    "dividas": {
+        "vendor": 800000.00,
+        "emprestimo_capital_giro": 1200000.00,
+        "finame": 1500000.00
+    },
+    "objetivo": "aumentar giro de estoque e reduzir prazo medio de recebimento"
+}

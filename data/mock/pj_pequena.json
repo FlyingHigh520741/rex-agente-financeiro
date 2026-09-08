@@ -1,0 +1,26 @@
+{
+    "razao_social": "Tech Solutions Ltda",
+    "nome_proprietario": "Roberto Lima",
+    "cnpj": "98.765.432/0001-10",
+    "segmento": "Desenvolvimento de software",
+    "regime_tributario": "Simples Nacional",
+    "faturamento_mensal": 85000.00,
+    "faturamento_anual": 1020000.00,
+    "despesas_mensais": {
+        "folha_pagamento": 25000.00,
+        "aluguel": 3500.00,
+        "softwares": 2000.00,
+        "marketing": 3000.00,
+        "impostos": 8500.00,
+        "outros": 2000.00
+    },
+    "funcionarios": 5,
+    "dividas": {
+        "emprestimo_capital_giro": 50000.00
+    },
+    "capital_giro": 35000.00,
+    "prazo_medio_recebimento": 30,
+    "prazo_medio_pagamento": 15,
+    "inadimplencia_percentual": 3.5,
+    "objetivo": "melhorar fluxo de caixa e reduzir inadimplencia"
+}

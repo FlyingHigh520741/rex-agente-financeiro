@@ -1,0 +1,22 @@
+{
+    "razao_social": "Maria Souza ME",
+    "nome_proprietario": "Maria Souza",
+    "cnpj": "12.345.678/0001-90",
+    "segmento": "Artesanato e decoração",
+    "regime_tributario": "MEI",
+    "faturamento_mensal": 6000.00,
+    "faturamento_anual": 72000.00,
+    "despesas_mensais": {
+        "materiais": 1500.00,
+        "embalagens": 300.00,
+        "marketing": 200.00,
+        "outros": 150.00
+    },
+    "conta_pj_separada": false,
+    "funcionarios": 0,
+    "dividas": {
+        "cartao_credito_pj": 1200.00
+    },
+    "capital_giro": 2000.00,
+    "objetivo": "separar financas PF e PJ e organizar o caixa"
+}

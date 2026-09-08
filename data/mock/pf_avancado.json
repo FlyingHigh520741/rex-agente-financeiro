@@ -1,0 +1,28 @@
+{
+    "nome": "Carlos Mendes",
+    "idade": 42,
+    "profissao": "Engenheiro Sênior",
+    "renda_mensal": 22000.00,
+    "perfil_investidor": "arrojado",
+    "objetivo": "independência financeira em 10 anos e renda passiva",
+    "gastos_mensais": {
+        "moradia": 4000.00,
+        "alimentacao": 1500.00,
+        "transporte": 800.00,
+        "saude": 600.00,
+        "lazer": 1200.00,
+        "outros": 800.00
+    },
+    "investimentos": {
+        "tesouro_direto": 30000.00,
+        "cdb": 25000.00,
+        "acoes": 80000.00,
+        "fiis": 45000.00,
+        "etfs": 20000.00,
+        "criptomoedas": 15000.00
+    },
+    "dividas": {},
+    "reserva_emergencia": 60000.00,
+    "meta_reserva_emergencia": 132000.00,
+    "carteira_total": 215000.00
+}

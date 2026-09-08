@@ -1,0 +1,25 @@
+{
+    "nome": "Ana Costa",
+    "idade": 25,
+    "profissao": "Assistente Administrativa",
+    "renda_mensal": 3500.00,
+    "perfil_investidor": "conservador",
+    "objetivo": "começar a guardar dinheiro e sair do cheque especial",
+    "gastos_mensais": {
+        "moradia": 900.00,
+        "alimentacao": 600.00,
+        "transporte": 300.00,
+        "saude": 100.00,
+        "lazer": 200.00,
+        "outros": 200.00
+    },
+    "investimentos": {
+        "poupanca": 500.00
+    },
+    "dividas": {
+        "cartao_credito": 800.00,
+        "cheque_especial": 400.00
+    },
+    "reserva_emergencia": 500.00,
+    "meta_reserva_emergencia": 21000.00
+}

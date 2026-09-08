@@ -1,103 +1,137 @@
-# 🎓 Edu - Educador Financeiro Inteligente
+# 💼 Rex — Conselheiro Financeiro Inteligente
 
-> Agente de IA Generativa que ensina conceitos de finanças pessoais de forma simples e personalizada, usando os próprios dados do cliente como exemplos práticos.
+> Agente de Inteligência Artificial Generativa e Engenharia de Dados para auxílio financeiro personalizado, atendendo perfis de **Pessoa Física (PF)** e **Pessoa Jurídica (PJ)** com base em dados mockados e inteligência preditiva/consultiva.
 
-## 💡 O Que é o Edu?
+---
 
-O Edu é um educador financeiro que **ensina**, não recomenda. Ele explica conceitos como reserva de emergência, tipos de investimentos e análise de gastos usando uma abordagem didática e exemplos concretos baseados no perfil do cliente.
+## 💡 Sobre o Rex
 
-**O que o Edu faz:**
-- ✅ Explica conceitos financeiros de forma simples
-- ✅ Usa dados do cliente como exemplos práticos
-- ✅ Responde dúvidas sobre produtos financeiros
-- ✅ Analisa padrões de gastos de forma educativa
+O **Rex** (do latim *regere*, "guiar") é um conselheiro e educador financeiro multi-perfil construído para oferecer orientação financeira contextualizada e segura. Ele adapta suas respostas dinamicamente com base no perfil do usuário (PF ou PJ) e no seu momento financeiro.
 
-**O que o Edu NÃO faz:**
-- ❌ Não recomenda investimentos específicos
-- ❌ Não acessa dados bancários sensíveis
-- ❌ Não substitui um profissional certificado
+### 🌟 Diferenciais do Rex:
+- **Segmentação Precisa:** Atende desde investidores iniciantes até empresas atacadistas de grande porte.
+- **Suporte Multi-Perfil:**
+  - **Pessoa Física:** Iniciante, Intermediário e Avançado.
+  - **Pessoa Jurídica:** MEI / Autônomo, Pequena Empresa, Média Empresa e Atacado / Distribuidor.
+- **Segurança & Anti-Alucinação:** Sistema de prompt englobando 6 regras rígidas de segurança, formatação numérica limpa e isolamento de raciocínio `<think>`.
+- **Arquitetura Escalável:** Preparado para integrar RAG (banco vetorial ChromaDB) e conectores de APIs financeiras reais (BCB, BrasilAPI, Brapi, CoinGecko).
 
-## 🏗️ Arquitetura
+---
+
+## 🏗️ Arquitetura do Sistema
 
 ```mermaid
 flowchart TD
-    A[Usuário] --> B[Streamlit]
-    B --> C[Ollama - LLM Local]
-    C --> D[Base de Conhecimento]
-    D --> C
-    C --> E[Resposta Educativa]
+    A[👤 Usuário] --> B[🖥️ Interface Streamlit - app.py]
+    B --> C[⚙️ BaseAgent - Orchestration]
+    C --> D[📄 Context & Mocks - data/mock/]
+    C --> E[📝 System Prompts Specializados - src/prompts/]
+    C --> F[⚡ Groq API - LLaMA / gpt-oss-120b]
+    F --> G[💬 Resposta Formatada + Raciocínio]
+    G --> B
 ```
 
-**Stack:**
-- Interface: Streamlit
-- LLM: Ollama (modelo local `gpt-oss`)
-- Dados: JSON/CSV mockados
+### 🛠️ Stack Tecnológica
+- **Linguagem:** Python 3.11+
+- **Frontend / UI:** [Streamlit](https://streamlit.io/)
+- **LLM Engine:** [Groq Cloud API](https://groq.com/) (`openai/gpt-oss-120b` / LLaMA 3)
+- **Manipulação de Dados:** Pandas
+- **Configuração & Variáveis:** `python-dotenv`
+
+---
 
 ## 📁 Estrutura do Projeto
 
 ```
-├── data/                          # Base de conhecimento
-│   ├── perfil_investidor.json     # Perfil do cliente
-│   ├── transacoes.csv             # Histórico financeiro
-│   ├── historico_atendimento.csv  # Interações anteriores
-│   └── produtos_financeiros.json  # Produtos para ensino
-│
-├── docs/                          # Documentação completa
-│   ├── 01-documentacao-agente.md  # Caso de uso e persona
-│   ├── 02-base-conhecimento.md    # Estratégia de dados
-│   ├── 03-prompts.md              # System prompt e exemplos
-│   ├── 04-metricas.md             # Avaliação de qualidade
-│   └── 05-pitch.md                # Apresentação do projeto
-│
-└── src/
-    └── app.py                     # Aplicação Streamlit
+dio-lab-bia-do-futuro/
+├── .env.example                # Template para variáveis de ambiente
+├── .gitignore                  # Arquivos ignorados pelo Git
+├── README.md                   # Documentação principal do repositório
+├── requirements.txt            # Dependências do projeto Python
+├── data/                       # Base de conhecimento e mocks
+│   ├── mock/                   # Perfis mockados em JSON (PF e PJ)
+│   ├── historico_atendimento.csv
+│   ├── perfil_investidor.json
+│   ├── produtos_financeiros.json
+│   └── transacoes.csv
+├── docs/                       # Documentação detalhada e planejamento
+│   ├── 01-documentacao-agente.md
+│   ├── 02-base-conhecimento.md
+│   ├── 03-prompts.md
+│   ├── 04-metricas.md
+│   ├── 05-pitch.md
+│   └── progresso.md            # Planejamento das Sprints e Roadmap
+└── src/                        # Código fonte da aplicação
+    ├── app.py                  # Aplicação Web (Streamlit)
+    ├── agents/
+    │   └── base_agent.py       # Classe base do agente conversacional
+    └── prompts/                # Prompts especializados para cada perfil
+        ├── pf_iniciante.txt
+        ├── pf_intermediario.txt
+        ├── pf_avancado.txt
+        ├── pj_mei.txt
+        ├── pj_pequena.txt
+        ├── pj_media.txt
+        └── pj_atacado.txt
 ```
 
-## 🚀 Como Executar
+---
 
-### 1. Instalar Ollama
+## 🚀 Como Executar o Projeto
 
+### 1. Clonar o Repositório
 ```bash
-# Baixar em: ollama.com
-ollama pull gpt-oss
-ollama serve
+git clone https://github.com/FlyingHigh520741/dio-lab-bia-do-futuro.git
+cd dio-lab-bia-do-futuro
 ```
 
-### 2. Instalar Dependências
-
+### 2. Configurar o Ambiente Virtual Python
 ```bash
-pip install streamlit pandas requests
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux / MacOS
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-### 3. Rodar o Edu
+### 3. Instalar Dependências
+```bash
+pip install -r requirements.txt
+```
 
+### 4. Configurar as Variáveis de Ambiente
+Crie um arquivo `.env` na raiz do projeto com a sua chave da API Groq:
+```env
+GROQ_API_KEY=sua_chave_groq_aqui
+```
+
+### 5. Executar a Aplicação Streamlit
 ```bash
 streamlit run src/app.py
 ```
 
-## 🎯 Exemplo de Uso
+---
 
-**Pergunta:** "O que é CDI?"  
-**Edu:** "CDI é uma taxa de referência usada pelos bancos. Quando um investimento rende '100% do CDI', significa que ele acompanha essa taxa. Hoje o CDI está próximo da Selic. Quer que eu explique a diferença entre os dois?"
+## 🗺️ Roadmap de Desenvolvimento (Sprints)
 
-**Pergunta:** "Onde estou gastando mais?"  
-**Edu:** "Olhando suas transações de outubro, sua maior despesa é moradia (R$ 1.380), seguida de alimentação (R$ 570). Juntas, representam quase 80% dos seus gastos. Isso é bem comum! Quer que eu explique algumas estratégias de organização?"
+- [x] **Sprint 1 — Fundação & MVP (Concluído)**
+  - Estruturação modular (`agents`, `prompts`, `mock data`).
+  - Integração com a Groq API.
+  - Interface Streamlit com Onboarding interativo para PF e PJ.
+  - Implementação do `BaseAgent` com sanitização de texto e parsing de raciocínio `<think>`.
+- [ ] **Sprint 2 — RAG & APIs em Tempo Real (Próximo Passo)**
+  - Banco vetorial ChromaDB com `sentence-transformers`.
+  - Integração com Banco Central (BCB SGS), BrasilAPI, Brapi (B3) e CoinGecko.
+- [ ] **Sprint 3 — Arquitetura Multi-Agentes Orquestrada**
+  - Roteador / Orquestrador central.
+  - Agentes especializados: *Educador*, *Analista de Dados* (Pandas), *Alertas de Risco*.
+- [ ] **Sprint 4 — Refinamento de Portfólio & Métricas**
+  - Avaliação de assertividade/anti-alucinação.
+  - Cobertura de testes e documentação final de entrega.
 
-## 📊 Métricas de Avaliação
+---
 
-| Métrica | Objetivo |
-|---------|----------|
-| **Assertividade** | O agente responde o que foi perguntado? |
-| **Segurança** | Evita inventar informações (anti-alucinação)? |
-| **Coerência** | A resposta é adequada ao perfil do cliente? |
-
-## 🎬 Diferenciais
-
-- **Personalização:** Usa os dados do próprio cliente nos exemplos
-- **100% Local:** Roda com Ollama, sem enviar dados para APIs externas
-- **Educativo:** Foco em ensinar, não em vender produtos
-- **Seguro:** Estratégias de anti-alucinação documentadas
-
-## 📝 Documentação Completa
-
-Toda a documentação técnica, estratégias de prompt e casos de teste estão disponíveis na pasta [`docs/`](./docs/).
+## 📄 Licença
+Este projeto é distribuído para fins educacionais e de portfólio no âmbito dos desafios da **DIO (Digital Innovation One)**.

@@ -1,0 +1,32 @@
+{
+    "razao_social": "Grupo Alfa Comercial S.A.",
+    "nome_proprietario": "Fernando Alves",
+    "cnpj": "45.678.901/0001-23",
+    "segmento": "Varejo de eletrodomésticos",
+    "regime_tributario": "Lucro Presumido",
+    "faturamento_mensal": 650000.00,
+    "faturamento_anual": 7800000.00,
+    "despesas_mensais": {
+        "folha_pagamento": 180000.00,
+        "aluguel": 25000.00,
+        "marketing": 35000.00,
+        "logistica": 45000.00,
+        "impostos": 97500.00,
+        "outros": 20000.00
+    },
+    "funcionarios": 45,
+    "indicadores": {
+        "ebitda_percentual": 18.0,
+        "margem_liquida": 8.5,
+        "capital_giro": 320000.00,
+        "divida_liquida": 850000.00
+    },
+    "dividas": {
+        "debentures": 500000.00,
+        "emprestimo_bancario": 350000.00
+    },
+    "prazo_medio_recebimento": 45,
+    "prazo_medio_pagamento": 30,
+    "inadimplencia_percentual": 4.2,
+    "objetivo": "reduzir divida liquida e aumentar margem EBITDA"
+}

@@ -1,0 +1,28 @@
+{
+    "nome": "João Silva",
+    "idade": 32,
+    "profissao": "Analista de TI",
+    "renda_mensal": 8500.00,
+    "perfil_investidor": "moderado",
+    "objetivo": "diversificar carteira e comprar imóvel em 5 anos",
+    "gastos_mensais": {
+        "moradia": 2000.00,
+        "alimentacao": 800.00,
+        "transporte": 400.00,
+        "saude": 300.00,
+        "lazer": 500.00,
+        "outros": 300.00
+    },
+    "investimentos": {
+        "poupanca": 5000.00,
+        "tesouro_direto": 12000.00,
+        "cdb": 8000.00,
+        "acoes": 3000.00
+    },
+    "dividas": {
+        "cartao_credito": 1500.00,
+        "financiamento_carro": 25000.00
+    },
+    "reserva_emergencia": 15000.00,
+    "meta_reserva_emergencia": 51000.00
+}
