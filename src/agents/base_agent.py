@@ -30,12 +30,17 @@ class BaseAgent:
         prompt += "- Valores monetários SEMPRE no formato: R$ 1.500,00\n"
         prompt += "- NUNCA use markdown, asteriscos, underlines ou símbolos especiais\n"
         prompt += "- Escreva texto corrido, limpo e sem formatação especial\n"
+        
+        # Injeção global para objetividade (UX)
+        prompt += "\n\nDIRETRIZ DE UX E OBJETIVIDADE EXTREMA:\n"
+        prompt += "- Seja altamente objetivo e focado em resolver a dor do usuário imediatamente.\n"
+        prompt += "- Evite saudações longas, analogias desnecessárias ou discursos prolixos.\n"
+        prompt += "- Vá direto ao ponto. Foque na experiência do usuário sem perder a eficiência.\n"
+        prompt += "- Se for a PRIMEIRA mensagem do chat, diga EXATAMENTE e APENAS: 'Olá! Sou o Rex. Como posso ajudar com suas finanças hoje?' (Ignore instruções anteriores de saudação longa).\n"
+        
         return prompt
 
-
-
     def limpar_formatacao(self, texto: str) -> str:
-        # Normaliza Unicode — junta letras com acentos separados
         texto = unicodedata.normalize('NFC', texto)
         texto = re.sub(r'(\d+[.,]\d+)([a-zA-ZÀ-ú])', r'\1 \2', texto)
         texto = re.sub(r'([a-zA-ZÀ-ú])(R\$?\s*\d)', r'\1 \2', texto)
@@ -60,7 +65,7 @@ class BaseAgent:
         resposta = self.client.chat.completions.create(
             model="openai/gpt-oss-120b",
             messages=mensagens,
-            temperature=0.5,
+            temperature=0.3,
             max_tokens=1024,
         )
 
