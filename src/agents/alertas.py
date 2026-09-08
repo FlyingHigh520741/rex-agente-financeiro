@@ -78,3 +78,4 @@ class AlertasAgent(BaseAgent):
         texto_completo = self.limpar_formatacao(texto_completo)
         pensamento, resposta_final = self.separar_raciocinio(texto_completo)
         return pensamento, resposta_final
+

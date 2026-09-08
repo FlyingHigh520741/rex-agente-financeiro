@@ -67,3 +67,4 @@ class MarketAPI:
 if __name__ == "__main__":
     print("Testando Market API:")
     print(MarketAPI.obter_resumo_mercado())
+

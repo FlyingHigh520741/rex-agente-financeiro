@@ -75,3 +75,4 @@ class OrquestradorAgent:
 
         pensamento, resposta = agente.responder(historico)
         return agente.nome_agente, agente.icone, pensamento, resposta
+

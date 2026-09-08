@@ -115,3 +115,4 @@ if __name__ == "__main__":
     kb = KnowledgeBase()
     print("Testando busca RAG para 'o que é cdi e selic':")
     print(kb.buscar_contexto("o que é cdi e selic"))
+
